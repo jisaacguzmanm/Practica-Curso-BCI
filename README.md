@@ -7,15 +7,17 @@ En esta práctica vas a recorrer el flujo completo de análisis de imaginería m
 
 ```
 ├── raw/                    ← 4 corridas de una misma persona (CSV), 10 trials cada una
-├── filter_eeg.py           ← Paso 2: filtrado de la señal
-├── analizar_erd_ers.py     ← Paso 3: análisis ERD/ERS y gráficas
+├── filter_eeg.py           ← Paso 3: filtrado de la señal
+├── analizar_erd_ers.py     ← Paso 4: análisis ERD/ERS y gráficas
 ├── requirements.txt        ← librerías necesarias
-└── GUIA_EJECUCION.md       ← esta guía
+└── README.md               ← esta guía
 ```
 
 ## Requisitos previos
 
-- **Python 3.10, 3.11 o 3.12** (recomendado: 3.11). Compruébalo con:
+- Descarga el repositorio (botón verde **Code → Download ZIP**, y descomprime) o clónalo con `git clone`.
+- Abre una terminal **dentro de la carpeta del repositorio** (donde está `requirements.txt`). En Windows, usa **PowerShell**.
+- Comprueba tu versión de **Python**:
 
   ```
   python --version
@@ -24,8 +26,32 @@ En esta práctica vas a recorrer el flujo completo de análisis de imaginería m
   > En Mac/Linux, si `python` no funciona, usa `python3` en todos los comandos.
   > En Windows, si no funciona, prueba con `py`.
 
-- Descarga el repositorio (botón verde **Code → Download ZIP**, y descomprime) o clónalo con `git clone`.
-- Abre una terminal **dentro de la carpeta del repositorio** (donde está `requirements.txt`).
+### ¿Qué versión de Python tengo?
+
+**Si tu versión es 3.10, 3.11 o 3.12** → todo bien, **sáltate esta sección** y continúa directo con el **Paso 1**.
+
+**Si tu versión NO es 3.10, 3.11 ni 3.12** (por ejemplo 3.9, 3.13 o mayor, o no tienes Python) → sigue estos pasos en Windows:
+
+**A. Instalar uv (una sola vez) y reiniciar PowerShell**
+
+```
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+Cierra PowerShell por completo y vuelve a abrirlo dentro de la carpeta del repositorio.
+
+**B. Crear y activar un entorno con Python 3.11**
+
+```
+uv venv --python 3.11 --seed
+.venv\Scripts\activate
+```
+
+Comprueba que quedó bien: `python --version` debe mostrar `Python 3.11.x`. Luego continúa con el **Paso 1**.
+
+> - Cada vez que abras una terminal nueva, repite solo `.venv\Scripts\activate` antes de ejecutar los scripts.
+> - Si al activar aparece un error de "ejecución de scripts deshabilitada", ejecuta
+>   `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` y vuelve a activar.
 
 ---
 
@@ -142,7 +168,9 @@ Recorre las gráficas, empezando por `resultados/global/`:
 
 | Problema | Solución |
 |---|---|
-| `python: command not found` | Prueba `python3` (Mac/Linux) o `py` (Windows), o instala Python 3.11 |
-| `No module named ...` | Repite el Paso 2 |
+| `python: command not found` | Prueba `python3` (Mac/Linux) o `py` (Windows), o sigue la sección "¿Qué versión de Python tengo?" |
+| `No module named ...` | Repite el Paso 2 (y si usas el entorno de uv, actívalo antes con `.venv\Scripts\activate`) |
+| `'uv' no se reconoce como un comando` | Cierra PowerShell por completo y ábrelo de nuevo |
+| Error al instalar `numpy`, `scipy` o `mne` | Tu Python probablemente es muy nuevo o muy viejo: sigue la sección "¿Qué versión de Python tengo?" |
 | `No se encontraron archivos .csv` | Ejecuta los comandos desde la carpeta raíz del repositorio |
 | `No hay archivos *_filtrado.csv` | Ejecuta primero el Paso 3 |
